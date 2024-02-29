@@ -88,11 +88,11 @@ void Book::print() const {
     std::cout << "Title: " << title_ << std::endl;
     std::cout << "Author: " << author_ << std::endl;
     std::cout << "ISBN: " << ISBN_ << std::endl;
-    std::cout << "Price: $" << std::fixed << std::setprecision(2) << price_ << std::endl;
+    std::cout << "Price: $" << std::fixed << std::setprecision(2) << price_ << std::endl; // Ensure format is "Price: $X.XX"
     std::cout << "Keywords: ";
     for (size_t i = 0; i < keywords_.size(); ++i) {
         std::cout << keywords_[i];
-        if (i < keywords_.size() - 1) std::cout << ", "; // Change to ensure no trailing space
+        if (i < keywords_.size() - 1) std::cout << ", "; // Ensure keywords are comma-separated
     }
     std::cout << std::endl;
     std::cout << "Blurb: " << blurb_ << std::endl;
@@ -100,9 +100,8 @@ void Book::print() const {
     if (icon_ != nullptr) {
         for (int i = 0; i < 80; ++i) {
             std::cout << icon_[i];
-            if (i < 79) std::cout << " "; // Ensure no trailing space for icons
+            if (i < 79) std::cout << " "; // Ensure no trailing space after the last number
         }
     }
-    std::cout << std::endl; // Ensure this matches the required end-line format from the project guidelines
+    std::cout << std::endl; // Make sure there's only one endl here
 }
-
