@@ -88,11 +88,12 @@ void Book::print() const {
     std::cout << "Title: " << title_ << std::endl;
     std::cout << "Author: " << author_ << std::endl;
     std::cout << "ISBN: " << ISBN_ << std::endl;
-    std::cout << "Price: $" << std::fixed << std::setprecision(2) << price_ << std::endl;  // Ensuring price is formatted as $X.XX
+    std::cout << "Price: $" << std::fixed << std::setprecision(2) << price_ << std::endl; // Ensure format is "Price: $X.XX"
     std::cout << "Keywords: ";
-    for (size_t i = 0; i < keywords_.size(); ++i) {
-        std::cout << keywords_[i];
-        if (i != keywords_.size() - 1) std::cout << ", "; // Ensure keywords are comma-separated without extra spaces at the end
+    int kCount = 0;
+    for (const auto& keyword : keywords_) {
+        std::cout << keyword;
+        if (++kCount < keywords_.size()) std::cout << ", "; // Ensure keywords are comma-separated
     }
     std::cout << std::endl;
     std::cout << "Blurb: " << blurb_ << std::endl;
@@ -100,8 +101,8 @@ void Book::print() const {
     if (icon_ != nullptr) {
         for (int i = 0; i < 80; ++i) {
             std::cout << icon_[i];
-            if (i != 79) std::cout << " ";  // Ensure there are spaces between icon numbers but not after the last number
+            if (i < 79) std::cout << " "; // Ensure no trailing space after the last number
         }
     }
-    std::cout << std::endl;  // End with a single new line
+    std::cout << std::endl; // Make sure there's only one endl here
 }
