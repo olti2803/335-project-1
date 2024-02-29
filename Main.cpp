@@ -35,105 +35,81 @@ int main(){
   while (getline(fin,line)){
 
     // Title
-    if (!std::regex_search(line, match, title)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, title)){
+      temp.setTitle(match[2]);
     }
-    temp.setTitle(match[2]);
 
     // Author
     getline(fin,line);
-    if (!std::regex_search(line, match, author)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, author)){
+      temp.setAuthor(match[2]);
     }
-    temp.setAuthor(match[2]);
 
     // ISBN
     getline(fin,line);
-    if (!std::regex_search(line, match, ISBN)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, ISBN)){
+      temp.setISBN(std::stoll(match[2]));
     }
-    temp.setISBN(std::stoll(match[2]));
 
     // Icon
     getline(fin,line);
-    if (!std::regex_search(line, match, icon)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, icon)){
+      std::stringstream numstring(match[2]);
+      int* numarray = new int[80];
+      for (int i = 0; i < 80; ++i){
+        numstring >> numarray[i];
+      }
+      temp.setIcon(numarray);
+      delete[] numarray; // Proper memory handling
     }
-    std::stringstream numstring(match[2]);
-    int next_number;
-    int* numarray = new int[80];
-    for (int i=0 ; i<80; ++i){
-      if (!(numstring >> next_number))
-        std::cout << "Error reading file format" << std::endl;
-      numarray[i] = next_number;
-    }
-    temp.setIcon(numarray);
-    numarray = nullptr;
 
     // Price
     getline(fin,line);
-    if (!std::regex_search(line, match, price)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, price)){
+      temp.setPrice(std::stof(match[2]));
     }
-    temp.setPrice(std::stof(match[2]));
 
     // Keywords
     getline(fin,line);
-    if (!std::regex_search(line, match, keywords)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, keywords)){
+      std::vector<std::string> keyVec;
+      std::string keyToken;
+      std::stringstream ss(match[2]);
+      while (getline(ss, keyToken, ',')) {
+        keyVec.push_back(keyToken);
+      }
+      temp.setKeywords(keyVec);
     }
-    std::stringstream keyword_string(match[2]);
-    std::vector<std::string> keywords;
-    while (keyword_string){
-      std::string keyword;
-      if (!getline(keyword_string >> std::ws, keyword, ',' )) break;
-      keywords.push_back(keyword);
-    }
-    temp.setKeywords(keywords);
 
     // Blurb
     getline(fin,line);
-    if (!std::regex_search(line, match, blurb)){
-      std::cout << "Error reading file format" << std::endl;
-      exit(1);
+    if (std::regex_search(line, match, blurb)){
+      temp.setBlurb(match[2]);
     }
-    temp.setBlurb(match[2]);
 
-    getline(fin,line);  // skip line between entries
-    catalog.push_back(temp);
-
+    catalog.push_back(temp); // Add the populated 'temp' Book object to 'catalog'
+    getline(fin, line); // Skip any blank lines between book entries
   }
 
- // Test cases
-std::cout << "Catalog contains " << catalog.size() << " books.\n";
-// Print details of the first 5 books as a sample
-std::cout << "First 5 books in the catalog:\n";
-for (int i = 0; i < 5 && i < catalog.size(); ++i) {
+  // Test cases
+  std::cout << "Catalog contains " << catalog.size() << " books.\n";
+  std::cout << "First 5 books in the catalog:\n";
+  for (int i = 0; i < 5 && i < catalog.size(); ++i) {
     catalog[i].print();
-    if (i < catalog.size() - 1) std::cout << "\n";  // Avoid extra newline at the end
-}
+    std::cout << '\n'; // Separate books by a newline for better readability
+  }
 
-// Example usage of moveAll function
-std::string keyword = "Spanish Literature"; //
-moveAll(keyword, catalog, cart);
-std::cout << "After moving, catalog contains " << catalog.size() << " books and cart contains " << cart.size() << " books.\n";
+  std::string keyword = "Spanish Literature"; // Replace with a keyword present in your books for testing
+  moveAll(keyword, catalog, cart);
+  std::cout << "After moving, catalog contains " << catalog.size() << " books and cart contains " << cart.size() << " books.\n";
 
-// Print details of books moved to cart (assuming books were moved)
-if (!cart.empty()) {
+  if (!cart.empty()) {
     std::cout << "Books moved to cart:\n";
     for (Book& book : cart) {
-        book.print();
-        std::cout << "\n"; // Ensure newline is consistent
+      book.print();
+      std::cout << '\n'; // Separate books by a newline
     }
-}
-
-
+  }
 
   return 0;
 }
