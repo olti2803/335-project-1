@@ -4,6 +4,7 @@
 #include <vector>
 #include <regex>
 #include <sstream>
+#include <algorithm>
 #include "Book.hpp"
 #include "MoveAll.hpp"
 

@@ -4,6 +4,7 @@ Project 1
 Due March 1, 2024
 */
 #include "Book.hpp"
+#include <algorithm>
 
 // Default constructor
 Book::Book() : title_(""), author_(""), ISBN_(0), icon_(nullptr), price_(0.0), keywords_({}), blurb_("") {}

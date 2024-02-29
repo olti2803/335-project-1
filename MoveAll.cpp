@@ -4,6 +4,7 @@ Project 1
 Due March 1, 2024
 */
 
+#include <algorithm>
 #include "MoveAll.hpp"
 #include "Book.hpp"
 
