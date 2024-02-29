@@ -87,18 +87,21 @@ void Book::print() const {
     std::cout << "Title: " << title_ << std::endl;
     std::cout << "Author: " << author_ << std::endl;
     std::cout << "ISBN: " << ISBN_ << std::endl;
-    std::cout << "Price: " << std::fixed << std::setprecision(2) << price_ << std::endl;
+    std::cout << "Price: $" << std::fixed << std::setprecision(2) << price_ << std::endl;
     std::cout << "Keywords: ";
-    for (const auto& keyword : keywords_) {
-        std::cout << keyword << " ";
+    for (size_t i = 0; i < keywords_.size(); ++i) {
+        std::cout << keywords_[i];
+        if (i < keywords_.size() - 1) std::cout << ", "; // Change to ensure no trailing space
     }
     std::cout << std::endl;
     std::cout << "Blurb: " << blurb_ << std::endl;
     std::cout << "Icon: ";
     if (icon_ != nullptr) {
         for (int i = 0; i < 80; ++i) {
-            std::cout << icon_[i] << " ";
+            std::cout << icon_[i];
+            if (i < 79) std::cout << " "; // Ensure no trailing space for icons
         }
     }
-    std::cout << std::endl;
+    std::cout << std::endl; // Ensure this matches the required end-line format from the project guidelines
 }
+
