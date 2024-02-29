@@ -109,7 +109,28 @@ int main(){
 
   }
 
-  // write your test cases here
+ // Test cases
+    std::cout << "Catalog contains " << catalog.size() << " books." << std::endl;
+    // Print details of the first 5 books as a sample
+    std::cout << "First 5 books in the catalog:" << std::endl;
+    for (int i = 0; i < 5 && i < catalog.size(); ++i) {
+        catalog[i].print();
+        std::cout << std::endl;  // Separate books by a newline for better readability
+    }
+
+    // Example usage of moveAll function
+    std::string keyword = "example_keyword"; // Replace 'example_keyword' with an actual keyword from your data
+    moveAll(keyword, catalog, cart);
+    std::cout << "After moving, catalog contains " << catalog.size() << " books and cart contains " << cart.size() << " books." << std::endl;
+
+    // Print details of books moved to cart (assuming books were moved)
+    if (!cart.empty()) {
+        std::cout << "Books moved to cart:" << std::endl;
+        for (Book& book : cart) {
+            book.print();
+            std::cout << std::endl; // Separate books by a newline
+        }
+    }
 
 
   return 0;
