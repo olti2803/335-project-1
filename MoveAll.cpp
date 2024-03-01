@@ -13,11 +13,12 @@ void moveAll(const std::string keyword, std::vector<Book>& source, std::vector<B
     const auto t1_start = std::chrono::steady_clock::now();
     int books_moved = 0;  // counts books moved
 
-    for (auto it = source.begin(); it != source.end();) {
+    auto it = source.begin();
+    while (it != source.end()) {
         if (std::find(it->getKeywords().begin(), it->getKeywords().end(), keyword) != it->getKeywords().end()) {
             dest.push_back(std::move(*it));
             it = source.erase(it);
-            books_moved++;
+            ++books_moved;
         } else {
             ++it;
         }

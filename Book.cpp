@@ -85,24 +85,23 @@ void Book::setBlurb(const std::string& blurb) { blurb_ = blurb; }
 
 // Print function
 void Book::print() const {
-    std::cout << "Title: " << title_ << std::endl;
-    std::cout << "Author: " << author_ << std::endl;
-    std::cout << "ISBN: " << ISBN_ << std::endl;
-    std::cout << "Price: $" << std::fixed << std::setprecision(2) << price_ << std::endl; // Ensure format is "Price: $X.XX"
-    std::cout << "Keywords: ";
-    int kCount = 0;
-    for (const auto& keyword : keywords_) {
-        std::cout << keyword;
-        if (++kCount < keywords_.size()) std::cout << ", "; // Ensure keywords are comma-separated
+    std::cout << "Title: " << title_ << "\n";
+    std::cout << "Author: " << author_ << "\n";
+    std::cout << "ISBN: " << ISBN_ << "\n";
+    std::string icon;
+    int* icon_ptr = icon_; // Assuming icon_ is the name of the icon member variable
+    for (int i = 0; i < 80; i++) {
+        icon += std::to_string(*icon_ptr) + " ";
+        icon_ptr++;
     }
-    std::cout << std::endl;
+    icon = icon.substr(0, icon.size() - 1);
+    std::cout << "Icon: " << icon << std::endl;
+    std::cout << "Price: $" << std::fixed << std::setprecision(2) << getPrice() << std::endl; // Assuming getPrice() is a getter for price_
+    std::string keywords;
+    for (auto kw = this->getKeywords().begin(); kw != this->getKeywords().end(); kw++) {
+        keywords += (*kw + ", ");
+    }
+    keywords = keywords.substr(0, keywords.size() - 2);
+    std::cout << "Keywords: " << keywords << "\n";
     std::cout << "Blurb: " << blurb_ << std::endl;
-    std::cout << "Icon: ";
-    if (icon_ != nullptr) {
-        for (int i = 0; i < 80; ++i) {
-            std::cout << icon_[i];
-            if (i < 79) std::cout << " "; // Ensure no trailing space after the last number
-        }
-    }
-    std::cout << std::endl; // Make sure there's only one endl here
 }
